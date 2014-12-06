@@ -1,16 +1,74 @@
 package selfbyselfwest.recognition;
 
-import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
+import org.apache.commons.io.Charsets;
+import org.apache.http.HttpEntity;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.entity.mime.content.StringBody;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import java.io.IOException;
+import java.util.concurrent.ExecutionException;
 
-public interface RecognitionClient {
-    @POST
-    @Path("/v1/search")
-    @Produces("application/json")
-    @Consumes("multipart/form-data")
-    RecognitionResult analyzeImg(@MultipartForm TokenAndImageForm tokenAndImageForm);
+public class RecognitionClient {
+    private final String fullUrl;
+    private final String token;
+
+    public RecognitionClient(String token, String fullUrl) {
+        this.fullUrl = fullUrl;
+        this.token = token;
+    }
+
+    public StatusAndBody queryRecognitionService(FileBody imagePart) throws ExecutionException, InterruptedException {
+
+        CloseableHttpClient httpclient = HttpClients.createDefault();
+        try {
+            HttpPost httppost = new HttpPost(fullUrl);
+            StringBody tokenPart = new StringBody(token, ContentType.TEXT_PLAIN);
+
+            HttpEntity reqEntity =
+                    MultipartEntityBuilder.create().addPart("token", tokenPart).addPart("image", imagePart).build();
+
+            httppost.setEntity(reqEntity);
+
+            System.out.println("executing request " + httppost.getRequestLine());
+            CloseableHttpResponse response = httpclient.execute(httppost);
+            try {
+                System.out.println("----------------------------------------");
+                int status = response.getStatusLine().getStatusCode();
+                System.out.println("status="+status);
+                HttpEntity resEntity = response.getEntity();
+                if (resEntity != null) {
+                    System.out.println("Response content length: " + resEntity.getContentLength());
+                    System.out.println("==== resEntity ====");
+                    System.out.println(resEntity);
+                    System.out.println("==== /resEntity ====");
+                    return new StatusAndBody(status, new String(EntityUtils.toByteArray(resEntity), Charsets.UTF_8));
+                } else {
+                    throw new RuntimeException("Can't reach response entity");
+                }
+            } finally {
+                response.close();
+            }
+        } catch (ClientProtocolException e) {
+            e.printStackTrace();
+            return null;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            try {
+                httpclient.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+    }
 }

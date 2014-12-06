@@ -1,35 +1,39 @@
 package selfbyselfwest.recognition;
 
+import com.google.common.base.Optional;
+
 import java.net.URL;
 
 public class RecognitionResult {
-    private String collectionName;
+    private RecognitionItem item;
 
-    private URL targetUrl;
+    private ImageRef image;
+    private int score;
 
-    private URL templateImgUrl;
-
-    public RecognitionResult() {
+    public Optional<String> getTargetUrl(){
+        return item!=null ? Optional.fromNullable(item.url) : Optional.<String>absent();
     }
 
-    public URL getTargetUrl(){
-        return targetUrl;
+    /**
+     *
+     * @return currently we're holding link to SelfBySelfWest twitter feed
+     */
+    public Optional<String> getCustomData() {
+        return item!=null ? Optional.fromNullable(item.custom) : Optional.<String>absent();
     }
-
-    public URL getTemplateImgUrl() {
-        return templateImgUrl;
+    public Optional<String> getCollectionName(){
+        return item!=null ? Optional.fromNullable(item.name) : Optional.<String>absent();
     }
-
-    public void setTemplateImgUrl(URL templateImgUrl) {
-        this.templateImgUrl = templateImgUrl;
+    public Optional<String> getTemplateImgThumbnailUrl(){
+        return image!=null ? Optional.fromNullable(image.getUrl()) : Optional.<String>absent();
     }
-
     @Override
     public String toString() {
         return "RecognitionResult{" +
-                "collectionName='" + collectionName + '\'' +
-                ", targetUrl=" + targetUrl +
-                ", templateImgUrl=" + templateImgUrl +
+                "collectionName='" + getCollectionName() + '\'' +
+                ", targetUrl=" + getTargetUrl() +
+                ", templateImgUrl=" + getTemplateImgThumbnailUrl() +
+                ", customData=" +getCustomData() +
                 '}';
     }
 }

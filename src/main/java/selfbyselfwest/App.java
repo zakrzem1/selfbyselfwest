@@ -1,9 +1,11 @@
 package selfbyselfwest;
 
+import com.google.gson.Gson;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.entity.mime.content.FileBody;
 import selfbyselfwest.recognition.RecognitionResult;
+import selfbyselfwest.recognition.RecognitionResults;
 import selfbyselfwest.recognition.RecognitionSearch;
 
 import java.io.File;
@@ -21,7 +23,7 @@ public class App {
             byte[] imageData = IOUtils.toByteArray(new FileInputStream(args[0]));
             //RecognitionResult result = new RecognitionSearch().search(imageData);
 
-            HttpEntity result = new RecognitionSearch().searchWithHttpClient(new FileBody(new File(args[0])));
+            RecognitionResults result = new RecognitionSearch().searchWithHttpClient(new FileBody(new File(args[0])));
 
             System.out.println(result);
         } catch (IOException e) {
