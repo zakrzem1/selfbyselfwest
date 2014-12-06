@@ -4,7 +4,6 @@ import com.google.common.base.Optional;
 
 public class RecognitionResult {
     private RecognitionItem item;
-
     private ImageRef image;
     private int score;
 
@@ -34,4 +33,5 @@ public class RecognitionResult {
                 ", customData=" +getCustomData() +
                 '}';
     }
+
 }

@@ -23,8 +23,8 @@ public class TrackedUser {
     public boolean imgRecognizedAlready(String imgurl) {
         return trackedImageUrls.containsKey(imgurl);
     }
-    public void markAsRecognized(String imgurl){
-        trackedImageUrls.put(imgurl,true);
+    public void markAsRecognized(String imgurl, boolean b){
+        trackedImageUrls.put(imgurl,b);
     }
     public boolean hasBeenSuccesfullyRecognized(String imgurl){
         return Boolean.TRUE.equals(trackedImageUrls.get(imgurl));

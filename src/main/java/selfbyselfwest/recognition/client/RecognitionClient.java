@@ -40,7 +40,7 @@ public class RecognitionClient {
 
             httppost.setEntity(reqEntity);
 
-            System.out.println("executing request " + httppost.getRequestLine());
+            System.out.println("executing Recognition Request " + httppost.getRequestLine());
             CloseableHttpResponse response = httpclient.execute(httppost);
             try {
                 System.out.println("----------------------------------------");

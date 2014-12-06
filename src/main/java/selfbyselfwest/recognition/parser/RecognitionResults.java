@@ -42,4 +42,16 @@ public class RecognitionResults {
     public String toString() {
         return ToStringBuilder.reflectionToString(this);
     }
+
+    public boolean isSuccess() {
+        return !getResults().isEmpty();
+    }
+
+    public RecognitionResults() {
+    }
+
+    public RecognitionResults(List<RecognitionResult> results) {
+        this.results = results;
+    }
 }
+

@@ -46,16 +46,17 @@ public class TwitterClientTest {
         when(userTracker.getTrackedUser(123L)).thenReturn(Optional.<TrackedUser>absent());
         when(userTracker.getTrackedUser(UserTracker.USERID_JOHNDOE)).thenReturn(Optional.<TrackedUser>absent());
 
-        Collection<String> freshPhotos = client.getFreshPhotosUrls(UserTracker.USERID_JOHNDOE);
+        Collection<TweetedPhoto> freshPhotos = client.getFreshPhotosUrls(UserTracker.USERID_JOHNDOE);
         Assert.assertTrue(freshPhotos.isEmpty());
     }
 
-    @Test        @Ignore
+    @Test
+    // @Ignore
     public void testGetFreshTweetsWhenThereIsNo() throws Exception {
         when(twitter.getUserTimeline(eq(UserTracker.USERID_JOHNDOE))).thenReturn(twitterTimeline);
         when(userTracker.getTrackedUser(eq(UserTracker.USERID_JOHNDOE))).thenReturn(Optional.<TrackedUser>absent());
 
-        Collection<String> freshPhotos = client.getFreshPhotosUrls(UserTracker.USERID_JOHNDOE);
+        Collection<TweetedPhoto> freshPhotos = client.getFreshPhotosUrls(UserTracker.USERID_JOHNDOE);
         Assert.assertTrue(freshPhotos.isEmpty());
     }
 
@@ -64,9 +65,19 @@ public class TwitterClientTest {
         when(twitter.getUserTimeline(eq(UserTracker.USERID_JOHNDOE))).thenReturn(null);
         when(userTracker.getTrackedUser(eq(UserTracker.USERID_JOHNDOE))).thenReturn(null);
 
-        Collection<String> freshPhotos = client.getFreshPhotosUrls(UserTracker.USERID_JOHNDOE);
+        Collection<TweetedPhoto> freshPhotos = client.getFreshPhotosUrls(UserTracker.USERID_JOHNDOE);
         Assert.assertTrue(freshPhotos.isEmpty());
     }
+
+    @Test
+    public void testGetFreshTweetsRealLife() throws Exception {
+        Optional<TrackedUser> user = Optional.of(new TrackedUser(UserTracker.USERID_JOHNDOE));
+        when(userTracker.getTrackedUser(eq(UserTracker.USERID_JOHNDOE))).thenReturn(user);
+
+        Collection<TweetedPhoto> freshPhotos = client.getFreshPhotosUrls(UserTracker.USERID_JOHNDOE);
+        Assert.assertTrue(freshPhotos.isEmpty());
+    }
+
 //    @Test
 //    public void testGetFreshTweetsWhen(){
 //        when(twitter.getUserTimeline(123L)).thenReturn(new ResponseList);

@@ -8,10 +8,13 @@ import java.util.Map;
 
 public class UserTracker {
     public static long USERID_JOHNDOE = 2907296770L;
+    public static long USERID_DAILYSHOWFAN = 2906830433L;
     final Map<Long, TrackedUser> trackedUsers = new HashMap<Long, TrackedUser>();
 
     public UserTracker() {
         ensureTrackedUser(USERID_JOHNDOE);
+        ensureTrackedUser(USERID_DAILYSHOWFAN);
+
     }
 
     public Collection<TrackedUser> getTrackedUsers() {
