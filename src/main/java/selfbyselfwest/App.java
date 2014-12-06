@@ -1,9 +1,12 @@
 package selfbyselfwest;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.http.HttpEntity;
+import org.apache.http.entity.mime.content.FileBody;
 import selfbyselfwest.recognition.RecognitionResult;
 import selfbyselfwest.recognition.RecognitionSearch;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
@@ -16,7 +19,10 @@ public class App {
         System.out.println(args[0]);
         try {
             byte[] imageData = IOUtils.toByteArray(new FileInputStream(args[0]));
-            RecognitionResult result = new RecognitionSearch().search(imageData);
+            //RecognitionResult result = new RecognitionSearch().search(imageData);
+
+            HttpEntity result = new RecognitionSearch().searchWithHttpClient(new FileBody(new File(args[0])));
+
             System.out.println(result);
         } catch (IOException e) {
             e.printStackTrace();

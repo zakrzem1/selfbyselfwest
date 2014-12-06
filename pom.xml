@@ -93,10 +93,26 @@
             <version>1.2.15</version>
         </dependency>
 
-        <!--<dependency>-->
-        <!--<groupId>org.twitter4j</groupId>-->
-        <!--<artifactId>twitter4j-core</artifactId>-->
-        <!--<version>[4.0,)</version>-->
-        <!--</dependency>-->
+        <!-- FIXME remove following if returned to rest easy -->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.3.6</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpcore</artifactId>
+            <version>4.3.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpmime</artifactId>
+            <version>4.3.6</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.3.1</version>
+        </dependency>
     </dependencies>
 </project>
