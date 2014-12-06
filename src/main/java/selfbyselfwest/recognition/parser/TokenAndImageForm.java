@@ -1,4 +1,4 @@
-package selfbyselfwest.recognition;
+package selfbyselfwest.recognition.parser;
 
 import org.jboss.resteasy.annotations.providers.multipart.PartType;
 

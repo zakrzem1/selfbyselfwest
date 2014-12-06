@@ -1,7 +1,6 @@
-package selfbyselfwest.recognition;
+package selfbyselfwest.recognition.parser;
 
 import com.google.gson.annotations.SerializedName;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.util.ArrayList;

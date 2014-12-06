@@ -1,9 +1,11 @@
 package selfbyselfwest.recognition;
 
-//import com.ning.http.client.AsyncHttpClient;
-//import com.ning.http.client.Response;
 
+import org.apache.http.entity.mime.content.ContentBody;
 import org.apache.http.entity.mime.content.FileBody;
+import selfbyselfwest.recognition.client.RecognitionClient;
+import selfbyselfwest.recognition.parser.RecognitionJsonParser;
+import selfbyselfwest.recognition.parser.RecognitionResults;
 
 import java.util.concurrent.ExecutionException;
 
@@ -16,14 +18,15 @@ public class RecognitionSearch {
     private final RecognitionClient client;
 
     public RecognitionSearch(){
-        this("3e9d8f72fbb941dc","https://search.craftar.net/v1/search");//  "https://search.craftar.net/v1/search"
+        this("3e9d8f72fbb941dc","https://search.craftar.net/v1/search");
     }
     public RecognitionSearch(String token, String fullUrl) {
         this.parser = new RecognitionJsonParser();
         this.client = new RecognitionClient(token, fullUrl);
     }
 
-    public RecognitionResults searchWithHttpClient(FileBody imagePart) throws ExecutionException, InterruptedException{
+    public RecognitionResults searchWithHttpClient(ContentBody imagePart) throws ExecutionException,
+            InterruptedException{
         StatusAndBody statusAndBody = client.queryRecognitionService(imagePart);
         if(statusAndBody.getStatus()==200){
             return parser.parse(statusAndBody.getBody());

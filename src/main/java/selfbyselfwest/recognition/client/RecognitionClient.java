@@ -1,4 +1,4 @@
-package selfbyselfwest.recognition;
+package selfbyselfwest.recognition.client;
 
 import org.apache.commons.io.Charsets;
 import org.apache.http.HttpEntity;
@@ -7,11 +7,13 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.entity.mime.content.ContentBody;
 import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import selfbyselfwest.recognition.StatusAndBody;
 
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
@@ -25,7 +27,8 @@ public class RecognitionClient {
         this.token = token;
     }
 
-    public StatusAndBody queryRecognitionService(FileBody imagePart) throws ExecutionException, InterruptedException {
+    public StatusAndBody queryRecognitionService(ContentBody imagePart) throws ExecutionException,
+            InterruptedException {
 
         CloseableHttpClient httpclient = HttpClients.createDefault();
         try {

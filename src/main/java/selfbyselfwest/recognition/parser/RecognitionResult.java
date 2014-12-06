@@ -1,8 +1,6 @@
-package selfbyselfwest.recognition;
+package selfbyselfwest.recognition.parser;
 
 import com.google.common.base.Optional;
-
-import java.net.URL;
 
 public class RecognitionResult {
     private RecognitionItem item;

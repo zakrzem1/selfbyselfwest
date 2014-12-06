@@ -1,4 +1,4 @@
-package selfbyselfwest.recognition;
+package selfbyselfwest.recognition.parser;
 
 import com.google.gson.annotations.SerializedName;
 
